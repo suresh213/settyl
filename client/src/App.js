@@ -15,7 +15,6 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <NavBar />
           <Switch></Switch>
         </Fragment>
       </Router>

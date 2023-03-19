@@ -1,10 +1,9 @@
-import { Router } from "express";
+const router = require("express").Router();
+const EmployeeController = require("../api/controllers/EmployeeController");
 
-const router = Router();
+router.get("/get", EmployeeController.getAllEmployees);
+router.post("/add", EmployeeController.addEmployee);
+router.put("/update/:id", EmployeeController.updateEmployee);
+router.delete("/delete/:id", EmployeeController.deleteEmployee);
 
-// router.use("/get");
-// router.use("/add");
-// router.use("/update");
-// router.use("/delete");
-
-export default router;
+module.exports = router;

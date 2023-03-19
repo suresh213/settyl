@@ -1,8 +1,6 @@
-import { Router } from "express";
-import EmployeeRoutes from "./EmployeeRoutes";
-
-const router = Router();
+const router = require("express").Router();
+const EmployeeRoutes = require("./EmployeeRoutes");
 
 router.use("/employee", EmployeeRoutes);
 
-export default router;
+module.exports = router;
