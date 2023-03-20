@@ -11,3 +11,27 @@ export const employeeStatus = [
   "Contract Employee",
   "Full-Time",
 ];
+
+export const employeeTemplate = [
+  {
+    label: "Name",
+    attribute: "name",
+  },
+  {
+    label: "Age",
+    attribute: "age",
+  },
+  {
+    label: "Department",
+    attribute: "department",
+  },
+  {
+    label: "Address",
+    attribute: "address",
+  },
+  {
+    label: "Status",
+    attribute: "status",
+    show: false,
+  },
+];
