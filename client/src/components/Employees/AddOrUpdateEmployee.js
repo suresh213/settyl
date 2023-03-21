@@ -21,7 +21,11 @@ import {
 } from "../../constants";
 import EmployeeService from "../../services/EmployeeService";
 
-export const AddOrUpdateEmployee = ({ employee: employeeProps, isUpdate }) => {
+export const AddOrUpdateEmployee = ({
+  employee: employeeProps,
+  isUpdate,
+  size,
+}) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
@@ -80,7 +84,14 @@ export const AddOrUpdateEmployee = ({ employee: employeeProps, isUpdate }) => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        onClick={(e) => {
+          handleClickOpen();
+          // e.nativeEvent.stopImmediatePropagation();
+        }}
+        size={size}
+      >
         {isUpdate ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
@@ -132,13 +143,16 @@ export const AddOrUpdateEmployee = ({ employee: employeeProps, isUpdate }) => {
         </DialogContent>
         <DialogActions>
           <Button
+            variant="contained"
             onClick={() => {
               isUpdate ? updateEmployee() : createEmployee();
             }}
           >
             {isUpdate ? "Update" : "Create"}
           </Button>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button color="error" variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,16 +1,30 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, Grid, Tab, Tabs } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { GET_EMPLOYEES } from "../../actions/types";
-import { employeeTemplate } from "../../constants";
 import EmployeeService from "../../services/EmployeeService";
-import { AddOrUpdateEmployee } from "./AddOrUpdateEmployee";
+import Employees from "../Employees/Employees";
+import DepartmentChart from "../Charts/DepartmentChart";
+import StatusChart from "../Charts/StatusChart";
+import Charts from "../Charts/Charts";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
 
+  const dispatch = useDispatch();
   const employees = useSelector((state) => state.EmployeeReducers.employees);
+
+  const tabComponents = [
+    {
+      name: "Dashboard",
+      component: <Charts employees={employees} />,
+    },
+    {
+      name: "Employees",
+      component: <Employees employees={employees} />,
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -26,44 +40,26 @@ const Dashboard = () => {
     })();
   }, []);
 
-  const deleteEmployee = async (id) => {
-    try {
-      await EmployeeService.deleteEmployee(id);
-      dispatch({
-        type: GET_EMPLOYEES,
-        payload: employees.filter((e) => e._id !== id),
-      });
-    } catch (err) {
-      toast.error(err);
-    }
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   return (
     <>
-      <Container>
-        <Box sx={{ flexDirection: "row-reverse" }}>
-          <AddOrUpdateEmployee />
+      <Box sx={{ width: "100%", typography: "body1" }}>
+        <Box sx={{ width: "100%" }}>
+          <Tabs
+            value={value}
+            onChange={handleTabChange}
+            aria-label="wrapped label tabs example"
+          >
+            {tabComponents.map((tab, index) => (
+              <Tab value={index} label={tab.name} />
+            ))}
+          </Tabs>
         </Box>
-        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="center" spacing={12}>
-              {employees.map((employee) => (
-                <Grid key={employee._id} item>
-                  {employeeTemplate.map((field) => (
-                    <Typography>
-                      {field.label} : {employee[field.attribute]}
-                    </Typography>
-                  ))}
-                  <AddOrUpdateEmployee employee={employee} isUpdate />
-                  <Button onClick={() => deleteEmployee(employee._id)}>
-                    Delete
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+      </Box>
+      <Box>{tabComponents[value].component}</Box>
     </>
   );
 };
