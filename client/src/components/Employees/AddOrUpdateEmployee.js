@@ -13,7 +13,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { GET_EMPLOYEES } from "../../actions/types";
 import {
   employeeStatus,
@@ -67,6 +67,7 @@ export const AddOrUpdateEmployee = ({
         payload: [res.data.data, ...employees],
       });
       setOpen(false);
+      toast.success("Employee added");
     } catch (err) {
       toast.error(err);
     }
@@ -85,6 +86,7 @@ export const AddOrUpdateEmployee = ({
         }),
       });
       setOpen(false);
+      toast.success("Employee updated");
     } catch (err) {
       toast.error(err);
     }

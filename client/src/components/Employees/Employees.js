@@ -9,8 +9,8 @@ import {
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 import { GET_EMPLOYEES } from "../../actions/types";
 import { employeeTemplate } from "../../constants";
 import EmployeeService from "../../services/EmployeeService";
@@ -43,6 +43,7 @@ const Employees = ({ employees }) => {
         type: GET_EMPLOYEES,
         payload: employees?.filter((e) => e._id !== id),
       });
+      toast.success("Employee deleted");
     } catch (err) {
       toast.error(err);
     }

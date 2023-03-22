@@ -1,7 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { GET_CURRENT_LOCATION, GET_EMPLOYEES } from "../../actions/types";
 import EmployeeService from "../../services/EmployeeService";
 import Charts from "../Charts/Charts";
@@ -32,9 +31,7 @@ const Dashboard = () => {
           type: GET_EMPLOYEES,
           payload: res.data.data,
         });
-      } catch (err) {
-        toast.error(err);
-      }
+      } catch (err) {}
     })();
 
     navigator.geolocation.getCurrentPosition((res) => {

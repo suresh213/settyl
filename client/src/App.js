@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
@@ -18,6 +19,7 @@ const App = () => {
           </Switch>
         </Fragment>
       </Router>
+      <Toaster position="bottom-right"/>
     </Provider>
   );
 };

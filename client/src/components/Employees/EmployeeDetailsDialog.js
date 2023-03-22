@@ -16,7 +16,7 @@ const EmployeeDetailsDialog = ({ employee, open, handleClose }) => {
       <DialogContent>
         <Box
           sx={{
-            width: "40vw",
+            minWidth: "20vw",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
