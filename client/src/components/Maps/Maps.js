@@ -12,7 +12,6 @@ const geoUrl =
   "https://raw.githubusercontent.com/deldersveld/topojson/master/continents/north-america.json";
 
 const Maps = ({ address, width }) => {
-  console.log(address);
   return (
     <Box width={width || "300%"} height="30%">
       <ComposableMap projection="geoAlbers">
