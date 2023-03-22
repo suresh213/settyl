@@ -1,15 +1,17 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import DepartmentChart from "./DepartmentChart";
-import StatusChart from "./StatusChart";
+import DepartmentChart from "./DepartmentBarChart";
+import DepartmentPieChart from "./DepartmentPieChart";
+import StatusBarChart from "./StatusBarChart";
+import StatusPieChart from "./StatusPieChart";
 
 const Charts = ({ employees }) => {
   return (
     <Grid container sx={{ p: 2 }}>
-      <StatusChart employees={employees} />
+      <StatusBarChart employees={employees} />
       <DepartmentChart employees={employees} />
-      <DepartmentChart employees={employees} />
-      <DepartmentChart employees={employees} />
+      <StatusPieChart employees={employees} />
+      <DepartmentPieChart employees={employees} />
     </Grid>
   );
 };

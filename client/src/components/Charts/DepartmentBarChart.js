@@ -1,4 +1,3 @@
-import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   Bar,
@@ -8,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import { groupBy } from "../../constants";
 

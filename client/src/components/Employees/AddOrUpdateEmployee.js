@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -20,6 +21,7 @@ import {
   initialEmployeeDetails,
 } from "../../constants";
 import EmployeeService from "../../services/EmployeeService";
+import Maps from "../Maps/Maps";
 
 export const AddOrUpdateEmployee = ({
   employee: employeeProps,
@@ -32,12 +34,18 @@ export const AddOrUpdateEmployee = ({
   const [employee, setEmployee] = useState(initialEmployeeDetails);
 
   const employees = useSelector((state) => state.EmployeeReducers.employees);
+  const currentLocation = useSelector(
+    (state) => state.EmployeeReducers.currentLocation
+  );
 
   useEffect(() => {
     if (employeeProps) {
-      setEmployee(employeeProps);
+      setEmployee({
+        ...employeeProps,
+        currentLocation,
+      });
     }
-  }, [employeeProps]);
+  }, [employeeProps, currentLocation]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,7 +77,7 @@ export const AddOrUpdateEmployee = ({
       const res = await EmployeeService.updateEmployee(employee._id, employee);
       dispatch({
         type: GET_EMPLOYEES,
-        payload: employees.map((e) => {
+        payload: employees?.map((e) => {
           if (e._id === employee._id) {
             return res.data.data;
           }
@@ -84,14 +92,7 @@ export const AddOrUpdateEmployee = ({
 
   return (
     <div>
-      <Button
-        variant="contained"
-        onClick={(e) => {
-          handleClickOpen();
-          // e.nativeEvent.stopImmediatePropagation();
-        }}
-        size={size}
-      >
+      <Button variant="contained" onClick={handleClickOpen} size={size}>
         {isUpdate ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
@@ -139,6 +140,16 @@ export const AddOrUpdateEmployee = ({
                 />
               ))}
             </RadioGroup>
+          </FormControl>
+          <FormControl sx={{ mt: 2, ml: 10 }}>
+            <FormLabel id="demo-radio-buttons-group-label">Location</FormLabel>
+            <Typography sx={{ fontSize: "10px" }}>
+              Location will be auto detected
+            </Typography>
+            <Maps
+              address={isUpdate ? employee.address : currentLocation}
+              width="170%"
+            />
           </FormControl>
         </DialogContent>
         <DialogActions>

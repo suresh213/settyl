@@ -1,13 +1,11 @@
-import { Box, Grid, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { GET_EMPLOYEES } from "../../actions/types";
+import { GET_CURRENT_LOCATION, GET_EMPLOYEES } from "../../actions/types";
 import EmployeeService from "../../services/EmployeeService";
-import Employees from "../Employees/Employees";
-import DepartmentChart from "../Charts/DepartmentChart";
-import StatusChart from "../Charts/StatusChart";
 import Charts from "../Charts/Charts";
+import Employees from "../Employees/Employees";
 
 const Dashboard = () => {
   const [value, setValue] = useState(0);
@@ -38,6 +36,14 @@ const Dashboard = () => {
         toast.error(err);
       }
     })();
+
+    navigator.geolocation.getCurrentPosition((res) => {
+      const coordinates = res.coords;
+      dispatch({
+        type: GET_CURRENT_LOCATION,
+        payload: `${coordinates.latitude},${coordinates.longitude}`,
+      });
+    });
   }, []);
 
   const handleTabChange = (event, newValue) => {

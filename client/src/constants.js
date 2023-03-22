@@ -2,7 +2,7 @@ export const initialEmployeeDetails = {
   name: null,
   age: null,
   department: null,
-  address: null,
+  address: "-74.006,50.7128",
   status: null,
 };
 
@@ -24,10 +24,6 @@ export const employeeTemplate = [
   {
     label: "Department",
     attribute: "department",
-  },
-  {
-    label: "Address",
-    attribute: "address",
   },
   {
     label: "Status",

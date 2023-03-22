@@ -41,7 +41,7 @@ const Employees = ({ employees }) => {
       await EmployeeService.deleteEmployee(id);
       dispatch({
         type: GET_EMPLOYEES,
-        payload: employees.filter((e) => e._id !== id),
+        payload: employees?.filter((e) => e._id !== id),
       });
     } catch (err) {
       toast.error(err);
@@ -67,7 +67,7 @@ const Employees = ({ employees }) => {
 
   return (
     <>
-      <Container >
+      <Container>
         <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
           <AddOrUpdateEmployee />
         </Box>
@@ -84,14 +84,9 @@ const Employees = ({ employees }) => {
               columnSpacing={4}
               rowSpacing={6}
             >
-              {employees.map((employee) => (
+              {employees?.map((employee) => (
                 <Grid sx={{ minWidth: "25%" }} key={employee._id} item>
-                  <Item
-                    onClick={(e) => {
-                      showEmployee(employee);
-                      // e.nativeEvent.stopImmediatePropagation();
-                    }}
-                  >
+                  <Item>
                     {employeeTemplate.map((field) => (
                       <Typography sx={{ mt: 1 }}>
                         {field.label} : {employee[field.attribute]}
@@ -106,6 +101,14 @@ const Employees = ({ employees }) => {
                         gridColumnGap: "20px",
                       }}
                     >
+                      <Button
+                        size="small"
+                        onClick={(e) => {
+                          showEmployee(employee);
+                        }}
+                      >
+                        Show
+                      </Button>
                       <AddOrUpdateEmployee
                         employee={employee}
                         isUpdate

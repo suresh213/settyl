@@ -1,18 +1,16 @@
-import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
-  ResponsiveContainer,
+  Legend, ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import { employeeStatus } from "../../constants";
 
-const StatusChart = ({ employees }) => {
+const StatusBarChart = ({ employees }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -20,7 +18,7 @@ const StatusChart = ({ employees }) => {
       return {
         name: status,
         count:
-          employees.filter((employee) => employee.status === status)?.length ||
+          employees?.filter((employee) => employee.status === status)?.length ||
           0,
       };
     });
@@ -60,4 +58,4 @@ const StatusChart = ({ employees }) => {
   );
 };
 
-export default StatusChart;
+export default StatusBarChart;
