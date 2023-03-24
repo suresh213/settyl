@@ -6,10 +6,6 @@ import { employeeTemplate } from "../../constants";
 import Maps from "../Maps/Maps";
 
 const EmployeeDetailsDialog = ({ employee, open, handleClose }) => {
-  const currentLocation = useSelector(
-    (state) => state.EmployeeReducers.currentLocation
-  );
-
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Employee details</DialogTitle>
@@ -27,8 +23,10 @@ const EmployeeDetailsDialog = ({ employee, open, handleClose }) => {
               {field.label} : {employee[field.attribute]}
             </Typography>
           ))}
-          <Typography sx={{ mt: 1 }}>Your location:</Typography>
-          <Maps address={employee.address || currentLocation} width="100%" />
+          <Typography sx={{ mt: 1 }}>Location:</Typography>
+          <Box sx={{ width: "50vw", height: "40vh" }}>
+            <Maps address={employee.address} />
+          </Box>
         </Box>
       </DialogContent>
     </Dialog>

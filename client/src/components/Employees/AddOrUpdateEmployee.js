@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,8 +12,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { GET_EMPLOYEES } from "../../actions/types";
 import {
   employeeStatus,
@@ -31,21 +31,15 @@ export const AddOrUpdateEmployee = ({
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
-  const [employee, setEmployee] = useState(initialEmployeeDetails);
+  const [employee, setEmployee] = useState({});
 
   const employees = useSelector((state) => state.EmployeeReducers.employees);
-  const currentLocation = useSelector(
-    (state) => state.EmployeeReducers.currentLocation
-  );
 
   useEffect(() => {
     if (employeeProps) {
-      setEmployee({
-        ...employeeProps,
-        currentLocation,
-      });
+      setEmployee(employeeProps);
     }
-  }, [employeeProps, currentLocation]);
+  }, [employeeProps]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -94,7 +88,12 @@ export const AddOrUpdateEmployee = ({
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen} size={size}>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        size={size}
+        fullScreen
+      >
         {isUpdate ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
@@ -143,15 +142,21 @@ export const AddOrUpdateEmployee = ({
               ))}
             </RadioGroup>
           </FormControl>
-          <FormControl sx={{ mt: 2, ml: 10 }}>
+          <Box></Box>
+          <FormControl sx={{ mt: 2, width: "100%", height: "20vh" }}>
             <FormLabel id="demo-radio-buttons-group-label">Location</FormLabel>
             <Typography sx={{ fontSize: "10px" }}>
               Location will be auto detected
             </Typography>
-            <Maps
-              address={isUpdate ? employee.address : currentLocation}
-              width="170%"
-            />
+            <Box sx={{ width: "100%", minHeight: "50vh" }}>
+              <Maps
+                address={
+                  isUpdate ? employee.address : initialEmployeeDetails.address
+                }
+                employee={employee}
+                setEmployee={setEmployee}
+              />
+            </Box>
           </FormControl>
         </DialogContent>
         <DialogActions>

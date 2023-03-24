@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { GET_EMPLOYEES } from "../../actions/types";
-import { employeeTemplate } from "../../constants";
+import { employeeTemplate, initialEmployeeDetails } from "../../constants";
 import EmployeeService from "../../services/EmployeeService";
 import { AddOrUpdateEmployee } from "./AddOrUpdateEmployee";
 import EmployeeDetailsDialog from "./EmployeeDetailsDialog";
@@ -70,7 +70,7 @@ const Employees = ({ employees }) => {
     <>
       <Container>
         <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
-          <AddOrUpdateEmployee />
+          <AddOrUpdateEmployee employee={initialEmployeeDetails} />
         </Box>
         <Grid
           sx={{ mt: 3 }}
@@ -85,8 +85,8 @@ const Employees = ({ employees }) => {
               columnSpacing={4}
               rowSpacing={6}
             >
-              {employees?.map((employee) => (
-                <Grid sx={{ minWidth: "25%" }} key={employee._id} item>
+              {employees?.map((employee, index) => (
+                <Grid sx={{ minWidth: "25%" }} key={index} item>
                   <Item>
                     {employeeTemplate.map((field) => (
                       <Typography sx={{ mt: 1 }}>

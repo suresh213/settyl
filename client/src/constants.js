@@ -2,7 +2,7 @@ export const initialEmployeeDetails = {
   name: null,
   age: null,
   department: null,
-  address: "-74.006,50.7128",
+  address: "12.971085071191842,77.59070351559143",
   status: null,
 };
 
