@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import L from "leaflet";
 
 const style = {
@@ -6,11 +6,14 @@ const style = {
   height: "100%",
 };
 
-class Maps extends React.Component {
-  componentDidMount() {
+let map = null;
+let layer = null;
+
+const Maps = ({ address, employee, setEmployee }) => {
+  useEffect(() => {
     // create map
-    this.map = L.map("map", {
-      center: this.props.address?.split(","),
+    map = L.map("map", {
+      center: address?.split(","),
       zoom: 14,
       layers: [
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -20,36 +23,33 @@ class Maps extends React.Component {
       ],
     });
 
-    this.map.on("click", (e) => {
-      this?.updateEmployee(`${e.latlng.lat},${e.latlng.lng}`);
+    map.on("click", (e) => {
+      if (setEmployee) {
+        updateEmployee(`${e.latlng.lat},${e.latlng.lng}`);
+      }
     });
 
     // add layer
-    this.layer = L.layerGroup().addTo(this.map);
-    this.updateMarkers(this.props.address);
-  }
-  componentDidUpdate({ address }) {
-    // check if data has changed
-    if (this.props.address !== address) {
-      this.updateMarkers(this.props.address);
-    }
-  }
-  updateMarkers(address) {
-    this.layer.clearLayers();
+    layer = L.layerGroup().addTo(map);
+
+    updateMarkers(address);
+  }, []);
+
+  useEffect(() => {
+    updateMarkers(employee.address);
+  }, [employee]);
+
+  const updateMarkers = (address) => {
+    layer.clearLayers();
     const [lat, lng] = address?.split(",");
-    L.marker({ lat, lng }, { title: "Location" }).addTo(this.layer);
-  }
-  updateEmployee(address) {
-    if (this?.props?.setEmployee) {
-      this?.props?.setEmployee({
-        ...this?.props?.employee,
-        address,
-      });
-    }
-  }
-  render() {
-    return <div id="map" style={style} />;
-  }
-}
+    L.marker({ lat, lng }, { title: "Location" }).addTo(layer);
+  };
+
+  const updateEmployee = (address) => {
+    setEmployee((employees) => ({ ...employee, address: address }));
+  };
+
+  return <div id="map" style={style} />;
+};
 
 export default Maps;

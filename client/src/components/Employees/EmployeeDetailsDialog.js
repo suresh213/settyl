@@ -24,7 +24,7 @@ const EmployeeDetailsDialog = ({ employee, open, handleClose }) => {
             </Typography>
           ))}
           <Typography sx={{ mt: 1 }}>Location:</Typography>
-          <Box sx={{ width: "40vw", height: "40vh" }}>
+          <Box sx={{ width: "35vw", height: "40vh" }}>
             <Maps address={employee.address} />
           </Box>
         </Box>
