@@ -36,6 +36,8 @@ const Maps = ({ address, employee, setEmployee }) => {
   }, []);
 
   useEffect(() => {
+    if (!employee) return;
+
     updateMarkers(employee.address);
   }, [employee]);
 
@@ -46,7 +48,7 @@ const Maps = ({ address, employee, setEmployee }) => {
   };
 
   const updateEmployee = (address) => {
-    setEmployee((employees) => ({ ...employee, address: address }));
+    setEmployee((employee) => ({ ...employee, address: address }));
   };
 
   return <div id="map" style={style} />;
